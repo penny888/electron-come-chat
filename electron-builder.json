@@ -1,0 +1,42 @@
+{
+  "appId": "com.example.electron-come-chat",
+  "productName": "Come Chat",
+  "directories": {
+    "output": "release"
+  },
+  "files": [
+    "src/main/**/*",
+    "src/backend/**/*",
+    "src/frontend/dist/**/*",
+    "node_modules/**/*"
+  ],
+  "extraResources": [
+    {
+      "from": "data",
+      "to": "data",
+      "filter": [
+        "**/*"
+      ]
+    },
+    {
+      "from": "node_modules",
+      "to": "app/node_modules",
+      "filter": [
+        "**/*"
+      ]
+    }
+  ],
+  "asar": false,
+  "win": {
+    "target": "nsis",
+    "icon": "src/resources/icon.ico"
+  },
+  "mac": {
+    "target": "dmg",
+    "icon": "src/resources/icon.icns"
+  },
+  "linux": {
+    "target": "AppImage",
+    "icon": "src/resources/icon.png"
+  }
+}

@@ -1,0 +1,59 @@
+<form method="POST" action="/admin/delete" onsubmit="return confirm('确认删除选中项？');">
+    <table class="data-table">
+        <thead>
+            <tr><th><input type="checkbox" id="selectAll"></th><th>ID</th><th>内容片段</th><th>来源</th><th>创建时间</th></tr>
+        </thead>
+        <tbody>
+            <% items.forEach(item => { %>
+            <tr>
+                <td><input type="checkbox" name="ids" value="<%= item.id %>" class="item-checkbox"></td>
+                <td><%= item.id %></td>
+                <td><%= item.content.substring(0, 100) %>...</td>
+                <td><%= item.metadata ? item.metadata.source : '未知' %></td>
+                <td><%= item.created_at ? new Date(parseInt(item.created_at)).toLocaleDateString() + ' ' + new Date(parseInt(item.created_at)).toLocaleTimeString() : '未知' %></td>
+            </tr>
+            <% }); %>
+        </tbody>
+    </table>
+    <div class="pagination">
+        <% for(let i = 1; i <= totalPages; i++) { %>
+            <a href="/admin?page=<%= i %>" class="<%= i === currentPage ? 'active' : '' %>"><%= i %></a>
+        <% } %>
+    </div>
+    <button type="submit" class="delete-btn">删除选中</button>
+</form>
+
+<script>
+    // 全选/取消全选逻辑
+    const selectAllCheckbox = document.getElementById('selectAll');
+    const itemCheckboxes = document.querySelectorAll('.item-checkbox');
+
+    if (selectAllCheckbox) {
+        selectAllCheckbox.addEventListener('change', function() {
+            const isChecked = this.checked;
+            itemCheckboxes.forEach(cb => cb.checked = isChecked);
+        });
+    }
+
+    // 当任意子复选框变化时，更新全选按钮状态
+    itemCheckboxes.forEach(cb => {
+        cb.addEventListener('change', function() {
+            const allChecked = Array.from(itemCheckboxes).every(cb => cb.checked);
+            if (allChecked) {
+                selectAllCheckbox.checked = true;
+            } else {
+                selectAllCheckbox.checked = false;
+            }
+        });
+    });
+
+    // 删除确认弹窗
+    function confirmDelete() {
+        const checkedBoxes = document.querySelectorAll('.item-checkbox:checked');
+        if (checkedBoxes.length === 0) {
+            alert('请至少选择一项');
+            return false;
+        }
+        return confirm(`确定要删除选中的 ${checkedBoxes.length} 条知识吗？`);
+    }
+</script>

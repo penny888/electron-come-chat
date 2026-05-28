@@ -1,0 +1,12 @@
+<h2>上传文档（.txt, .pdf, .docx）</h2>
+<% if (error) { %>
+    <div class="error"><%= error %></div>
+<% } %>
+<% if (success) { %>
+    <div class="success"><%= success %></div>
+<% } %>
+<form method="POST" action="/admin/upload" enctype="multipart/form-data">
+    <input type="file" name="file" accept=".txt,.pdf,.docx" required>
+    <button type="submit">上传并向量化</button>
+</form>
+<p class="info">文档将自动分块（每块约1000字符），生成向量并存入 Milvus。</p>
