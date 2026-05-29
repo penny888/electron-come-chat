@@ -86,12 +86,25 @@ npm install
 编辑 `src/backend/.env`：
 
 ```env
+# 后端运行端口
 PORT=3100
+
+# DeepSeek 大模型
 DEEPSEEK_API_KEY=your_deepseek_api_key
-DEEPSEEK_BASE_URL=https://api.deepseek.com
+DEEPSEEK_BASE_URL=https://api.deepseek.com/v1
+
+# OpenAI Embedding（或兼容接口）
+OPENAI_API_KEY=your_openai_api_key
+OPENAI_BASE_URL=https://api.openai.com/v1
+
+# Milvus 向量数据库
 MILVUS_ADDRESS=localhost:19530
+
+# SQLite 路径
 SQLITE_DB_PATH=./data/app.db
-JWT_SECRET=your_jwt_secret
+
+# JWT秘钥
+JWT_SECRET=123456
 ```
 
 ### 启动开发环境
